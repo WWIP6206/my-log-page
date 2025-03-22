@@ -7,17 +7,19 @@
   <script>
     (async () => {
       try {
-        // IPアドレス取得
         const ip = await fetch('https://api.ipify.org').then(res => res.text());
-
-        // ユーザーエージェント取得
         const ua = navigator.userAgent;
 
-        // Google Apps Script に送信
-        fetch("https://script.google.com/macros/s/AKfycbzRHcnX1UDO9nvV8OVMeZvk9HaSpRF0xlUgwpoEeTuU0Ar1RTdg_Hluhjy-XfBqFfvO/exec?ip=" 
-              + encodeURIComponent(ip) 
-              + "&ua=" 
-              + encodeURIComponent(ua));
+        // 任意の文書ID・ユーザーID（固定でも動的でもOK）
+        const docId = "log-page-001";
+        const userId = "anonymous";
+
+        // GASに送信
+        fetch("https://script.google.com/macros/s/AKfycbzRHcnX1UDO9nvV8OVMeZvk9HaSpRF0xlUgwpoEeTuU0Ar1RTdg_Hluhjy-XfBqFfvO/exec?"
+              + "ip=" + encodeURIComponent(ip)
+              + "&ua=" + encodeURIComponent(ua)
+              + "&docId=" + encodeURIComponent(docId)
+              + "&userId=" + encodeURIComponent(userId));
       } catch (e) {
         console.error("IPログ送信に失敗しました:", e);
       }
