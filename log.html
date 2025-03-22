@@ -11,15 +11,19 @@
         const ip = await fetch('https://api.ipify.org').then(res => res.text());
         const ua = navigator.userAgent;
 
-        // クエリパラメータから docId を取得
+        // クエリパラメータから docId を取得（例: ?docId=top）
         const params = new URLSearchParams(window.location.search);
         const docId = params.get("docId") || "no-doc-id";
 
-        // GAS に送信
-        fetch("https://script.google.com/macros/s/AKfycbzRHcnX1UDO9nvV8OVMeZvk9HaSpRF0xlUgwpoEeTuU0Ar1RTdg_Hluhjy-XfBqFfvO/exec?"
-              + "ip=" + encodeURIComponent(ip)
-              + "&ua=" + encodeURIComponent(ua)
-              + "&docId=" + encodeURIComponent(docId));
+        // キャッシュバスター（毎回違う値を送る）
+        const cacheBuster = Date.now(); // ミリ秒のタイムスタンプ
+
+        // Google Apps Script に送信
+        fetch("https://script.google.com/macros/s/AKfycbydusuGWYYeh5dl2ljhWGtkQEk-UYIn4jYNz-GkeNeh2Ac4onckbt-J5mXELMfpA537/exec?" +
+          "ip=" + encodeURIComponent(ip) +
+          "&ua=" + encodeURIComponent(ua) +
+          "&docId=" + encodeURIComponent(docId) +
+          "&cb=" + cacheBuster); // ← キャッシュバスターつけることで常に新リクエスト
       } catch (e) {
         console.error("IPログ送信に失敗:", e);
       }
