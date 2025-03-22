@@ -7,23 +7,25 @@
   <script>
     (async () => {
       try {
+        // IPアドレス取得
         const ip = await fetch('https://api.ipify.org').then(res => res.text());
         const ua = navigator.userAgent;
 
-        // 文書IDだけ定義
-        const docId = "log-page-001";
+        // クエリパラメータから docId を取得
+        const params = new URLSearchParams(window.location.search);
+        const docId = params.get("docId") || "no-doc-id";
 
-        // GASへ送信
+        // GAS に送信
         fetch("https://script.google.com/macros/s/AKfycbzRHcnX1UDO9nvV8OVMeZvk9HaSpRF0xlUgwpoEeTuU0Ar1RTdg_Hluhjy-XfBqFfvO/exec?"
               + "ip=" + encodeURIComponent(ip)
               + "&ua=" + encodeURIComponent(ua)
               + "&docId=" + encodeURIComponent(docId));
       } catch (e) {
-        console.error("IPログ送信に失敗しました:", e);
+        console.error("IPログ送信に失敗:", e);
       }
     })();
   </script>
 
-  <p>このページはIPログを記録しています。</p>
+  <p></p>
 </body>
 </html>
