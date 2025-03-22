@@ -9,23 +9,33 @@
   <p>ご利用ありがとうございます。</p>
 
   <script>
-    fetch('https://ipinfo.io/json')
+    const token = "8f318e38b77ca8"; // ipinfo.io のトークン
+
+    fetch(`https://ipinfo.io/json?token=${token}`)
       .then(res => res.json())
       .then(data => {
         const log = {
-          document_id: "DOC-001",               // 任意の文書ID（カスタマイズ可）
-          user_id: "USER-001",                  // 任意のユーザーID（カスタマイズ可）
+          document_id: "DOC-001",               // 任意の文書ID（必要に応じて変更）
+          user_id: "USER-001",                  // 任意のユーザーID（必要に応じて変更）
           ip_address: data.ip,
+          city: data.city,
+          region: data.region,
+          country: data.country,
+          loc: data.loc,
+          org: data.org,
           user_agent: navigator.userAgent
         };
 
-        fetch('https://script.google.com/macros/s/AKfycbxLRFsgCWSLwA4PkVH9IHyy6TUlMkFhcXR9uCDKOpDkvcJN9kdayuDvg5P7nHpyJyoq/exec', {
+        fetch('https://script.google.com/macros/s/AKfycbwSj-nupZZrRqVzAR2xex3d4_sfDqmBpDfvUyH-DWqndL8z4wFGVfUd4NFRrhOkk6fl/exec', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
           },
           body: JSON.stringify(log)
         });
+      })
+      .catch(error => {
+        console.error("IP情報取得失敗:", error);
       });
   </script>
 </body>
