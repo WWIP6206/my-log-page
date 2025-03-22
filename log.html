@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html>
 <head>
   <meta charset="UTF-8">
   <title>アクセス記録ページ</title>
@@ -10,16 +10,20 @@
 
   <script>
     fetch('https://ipinfo.io/json')
-      .then(response => response.json())
+      .then(res => res.json())
       .then(data => {
         const log = {
-          ip: data.ip,
-          ua: navigator.userAgent
+          document_id: "DOC-001",               // 任意の文書ID（カスタマイズ可）
+          user_id: "USER-001",                  // 任意のユーザーID（カスタマイズ可）
+          ip_address: data.ip,
+          user_agent: navigator.userAgent
         };
 
         fetch('https://script.google.com/macros/s/AKfycbxLRFsgCWSLwA4PkVH9IHyy6TUlMkFhcXR9uCDKOpDkvcJN9kdayuDvg5P7nHpyJyoq/exec', {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          headers: {
+            'Content-Type': 'application/json'
+          },
           body: JSON.stringify(log)
         });
       });
