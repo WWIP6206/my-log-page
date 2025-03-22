@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>アクセス記録ページ</title>
+</head>
+<body>
+  <h2>このページにアクセスした情報は記録されました。</h2>
+  <p>ご利用ありがとうございます。</p>
+
+  <script>
+    fetch('https://ipinfo.io/json')
+      .then(response => response.json())
+      .then(data => {
+        const log = {
+          ip: data.ip,
+          ua: navigator.userAgent
+        };
+
+        fetch('https://script.google.com/macros/s/AKfycbxLRFsgCWSLwA4PkVH9IHyy6TUlMkFhcXR9uCDKOpDkvcJN9kdayuDvg5P7nHpyJyoq/exec', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(log)
+        });
+      });
+  </script>
+</body>
+</html>
