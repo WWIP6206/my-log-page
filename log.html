@@ -1,42 +1,29 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="UTF-8">
-  <title>アクセス記録ページ</title>
+  <title>IPログ記録</title>
 </head>
 <body>
-  <h2>このページにアクセスした情報は記録されました。</h2>
-  <p>ご利用ありがとうございます。</p>
-
   <script>
-    const token = "8f318e38b77ca8"; // ipinfo.io のトークン
+    (async () => {
+      try {
+        // IPアドレス取得
+        const ip = await fetch('https://api.ipify.org').then(res => res.text());
 
-    fetch(`https://ipinfo.io/json?token=${token}`)
-      .then(res => res.json())
-      .then(data => {
-        const log = {
-          document_id: "DOC-001",               // 任意の文書ID（必要に応じて変更）
-          user_id: "USER-001",                  // 任意のユーザーID（必要に応じて変更）
-          ip_address: data.ip,
-          city: data.city,
-          region: data.region,
-          country: data.country,
-          loc: data.loc,
-          org: data.org,
-          user_agent: navigator.userAgent
-        };
+        // ユーザーエージェント取得
+        const ua = navigator.userAgent;
 
-        fetch('https://script.google.com/macros/s/AKfycbwSj-nupZZrRqVzAR2xex3d4_sfDqmBpDfvUyH-DWqndL8z4wFGVfUd4NFRrhOkk6fl/exec', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(log)
-        });
-      })
-      .catch(error => {
-        console.error("IP情報取得失敗:", error);
-      });
+        // Google Apps Script に送信
+        fetch("https://script.google.com/macros/s/AKfycbzRHcnX1UDO9nvV8OVMeZvk9HaSpRF0xlUgwpoEeTuU0Ar1RTdg_Hluhjy-XfBqFfvO/exec?ip=" 
+              + encodeURIComponent(ip) 
+              + "&ua=" 
+              + encodeURIComponent(ua));
+      } catch (e) {
+        console.error("IPログ送信に失敗しました:", e);
+      }
+    })();
   </script>
+
+  <p>このページはIPログを記録しています。</p>
 </body>
 </html>
