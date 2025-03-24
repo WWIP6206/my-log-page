@@ -7,17 +7,12 @@
         .then(txt => {
           const ip = txt.match(/ip=(.+)/)?.[1] || "未取得";
           const ua = navigator.userAgent;
-
-          const scriptURL = "https://script.google.com/macros/s/AKfycbz6LVV3xSOaXrXf6QU9FqlPktIo_3bQO1sptai6En7f20gqHWJQBiAiYFT-NpihpxTtXg/exec";
-          const sheetName = "cdef-8765-21-0987-h";  // 対応するスプレッドシートのシート名
-          const driveLink = "https://drive.google.com/drive/folders/1BLJp9l7lsTLOfWtiLvgoJBr4LkmrcUBq";  // 制限付きのドライブURL
-
-          const redirect = scriptURL
-            + "?id=" + encodeURIComponent(sheetName)
-            + "&ip=" + encodeURIComponent(ip)
-            + "&ua=" + encodeURIComponent(ua)
-            + "&next=" + encodeURIComponent(driveLink);
-
+          const redirect =
+            "https://script.google.com/macros/s/AKfycbz6LVV3xSOaXrXf6QU9FqlPktIo_3bQO1sptai6En7f20gqHWJQBiAiYFT-NpihpxTtXg/exec" +
+            "?id=cdef-8765-21-0987-h" +
+            "&ip=" + encodeURIComponent(ip) +
+            "&ua=" + encodeURIComponent(ua) +
+            "&next=" + encodeURIComponent("https://drive.google.com/drive/folders/1BLJp9l7lsTLOfWtiLvgoJBr4LkmrcUBq?usp=sharing");
           window.location.href = redirect;
         });
     </script>
