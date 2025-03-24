@@ -1,20 +1,47 @@
 <!DOCTYPE html>
 <html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Redirecting...</title>
+    <style>
+      body {
+        background-color: #111;
+        color: #fff;
+        font-family: sans-serif;
+        text-align: center;
+        padding-top: 20%;
+      }
+    </style>
+  </head>
   <body>
+    <p>リダイレクト中です。しばらくお待ちください...</p>
     <script>
-      fetch("https://www.cloudflare.com/cdn-cgi/trace")
-        .then(res => res.text())
-        .then(txt => {
-          const ip = txt.match(/ip=(.+)/)?.[1] || "未取得";
+      async function logAndRedirect() {
+        try {
+          const res = await fetch("https://www.cloudflare.com/cdn-cgi/trace");
+          const txt = await res.text();
+          const ipMatch = txt.match(/ip=(.+)/);
+          const ip = ipMatch ? ipMatch[1].trim() : "未取得";
           const ua = navigator.userAgent;
-          const redirect =
+
+          const id = "cdef-8765-21-0987-h";
+          const nextURL = "https://drive.google.com/drive/folders/1BLJp9l7lsTLOfWtiLvgoJBr4LkmrcUBq?usp=sharing";
+
+          const redirectURL =
             "https://script.google.com/macros/s/AKfycbz6LVV3xSOaXrXf6QU9FqlPktIo_3bQO1sptai6En7f20gqHWJQBiAiYFT-NpihpxTtXg/exec" +
-            "?id=cdef-8765-21-0987-h" +
+            "?id=" + encodeURIComponent(id) +
             "&ip=" + encodeURIComponent(ip) +
             "&ua=" + encodeURIComponent(ua) +
-            "&next=" + encodeURIComponent("https://drive.google.com/drive/folders/1BLJp9l7lsTLOfWtiLvgoJBr4LkmrcUBq?usp=sharing");
-          window.location.href = redirect;
-        });
+            "&next=" + encodeURIComponent(nextURL);
+
+          window.location.href = redirectURL;
+        } catch (e) {
+          document.body.innerHTML = "<p>IP取得に失敗しました。もう一度お試しください。</p>";
+          console.error("IP取得失敗:", e);
+        }
+      }
+
+      logAndRedirect();
     </script>
   </body>
 </html>
