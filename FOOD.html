@@ -14,11 +14,13 @@
       .then(data => {
         const ip = data.ip;
         const timestamp = new Date().toISOString();
+        const ua = navigator.userAgent;
 
         const params = new URLSearchParams({
           ip: ip,
           time: timestamp,
-          sheet: SHEET_NAME
+          sheet: SHEET_NAME,
+          ua: ua
         });
 
         fetch(`${GAS_URL}?${params.toString()}`)
