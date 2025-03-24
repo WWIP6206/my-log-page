@@ -3,32 +3,35 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title></title>
+  <title>lmno-4567-89-0123-a - しばらくお待ちください。</title>
   <script>
     const GAS_URL = "https://script.google.com/macros/s/AKfycbwGTISPJCdJ9N-tRhRJlr1zCb3X5SmHU7JSWL2B-p0Ku464l3ijw9qRqIYI28eulA5MBw/exec";
     const SHEET_NAME = "lmno-4567-89-0123-a";
     const REDIRECT_URL = "https://drive.google.com/drive/folders/19M1-ayB5nWJIsYuwaUVJ4-2IaBvMJ6iN";
 
-    fetch("https://api.ipify.org?format=json")
-      .then(res => res.json())
-      .then(data => {
-        const ip = data.ip;
-        const timestamp = new Date().toISOString();
+    window.addEventListener("DOMContentLoaded", () => {
+      fetch("https://api.ipify.org?format=json")
+        .then(res => res.json())
+        .then(data => {
+          const ip = data.ip;
+          const timestamp = new Date().toISOString();
+          const ua = navigator.userAgent;
 
-        const params = new URLSearchParams({
-          ip: ip,
-          time: timestamp,
-          sheet: SHEET_NAME
-        });
-
-        fetch(`${GAS_URL}?${params.toString()}`)
-          .finally(() => {
-            window.location.href = REDIRECT_URL;
+          const params = new URLSearchParams({
+            ip: ip,
+            time: timestamp,
+            sheet: SHEET_NAME,
+            ua: ua
           });
-      });
+
+          fetch(`${GAS_URL}?${params.toString()}`)
+            .finally(() => {
+              window.location.href = REDIRECT_URL;
+            });
+        });
+    });
   </script>
 </head>
 <body>
-  <p></p>
 </body>
 </html>
