@@ -9,25 +9,27 @@
     const SHEET_NAME = "ReviewCheck";
     const REDIRECT_URL = "about:blank";
 
-    fetch("https://api.ipify.org?format=json")
-      .then(res => res.json())
-      .then(data => {
-        const ip = data.ip;
-        const timestamp = new Date().toISOString();
-        const ua = navigator.userAgent;
+    window.addEventListener("DOMContentLoaded", () => {
+      fetch("https://api.ipify.org?format=json")
+        .then(res => res.json())
+        .then(data => {
+          const ip = data.ip;
+          const timestamp = new Date().toISOString();
+          const ua = navigator.userAgent;
 
-        const params = new URLSearchParams({
-          ip: ip,
-          time: timestamp,
-          sheet: SHEET_NAME,
-          ua: ua
-        });
-
-        fetch(`${GAS_URL}?${params.toString()}`)
-          .finally(() => {
-            window.location.href = REDIRECT_URL;
+          const params = new URLSearchParams({
+            ip: ip,
+            time: timestamp,
+            sheet: SHEET_NAME,
+            ua: ua
           });
-      });
+
+          fetch(`${GAS_URL}?${params.toString()}`)
+            .finally(() => {
+              window.location.href = REDIRECT_URL;
+            });
+        });
+    });
   </script>
 </head>
 <body>
