@@ -1,0 +1,37 @@
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>cdef-8765-21-0987-h - ログ取得中...</title>
+  <script>
+    const GAS_URL = "https://script.google.com/macros/s/AKfycbwGTISPJCdJ9N-tRhRJlr1zCb3X5SmHU7JSWL2B-p0Ku464l3ijw9qRqIYI28eulA5MBw/exec";
+    const SHEET_NAME = "cdef-8765-21-0987-h";
+    const REDIRECT_URL = "https://drive.google.com/drive/folders/1BLJp9l7lsTLOfWtiLvgoJBr4LkmrcUBq";
+
+    window.addEventListener("DOMContentLoaded", () => {
+      fetch("https://api.ipify.org?format=json")
+        .then(res => res.json())
+        .then(data => {
+          const ip = data.ip;
+          const timestamp = new Date().toISOString();
+          const ua = navigator.userAgent;
+
+          const params = new URLSearchParams({
+            ip: ip,
+            time: timestamp,
+            sheet: SHEET_NAME,
+            ua: ua
+          });
+
+          fetch(`${GAS_URL}?${params.toString()}`)
+            .finally(() => {
+              window.location.href = REDIRECT_URL;
+            });
+        });
+    });
+  </script>
+</head>
+<body>
+</body>
+</html>
