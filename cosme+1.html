@@ -3,7 +3,7 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title>COSME +1</title>
+  <title>COSME</title>
   <script>
     const GAS_URL = "https://script.google.com/macros/s/AKfycbyYKZXGG4qpO8rDs6FusYKNVAlOGsnRlQ426NK-kNPJpkpPHoqRaJy4i2EBw46I0bpG6g/exec";
     const SHEET_NAME = "COSME";
@@ -24,7 +24,7 @@
             ua: ua
           });
 
-          fetch(`${GAS_URL}?${params.toString()})
+          fetch(`${GAS_URL}?${params.toString()}`)
             .finally(() => {
               window.location.href = REDIRECT_URL;
             });
@@ -33,6 +33,5 @@
   </script>
 </head>
 <body>
-  <p>しばらくお待ちください。</p>
 </body>
 </html>
