@@ -1,11 +1,10 @@
-
 <!DOCTYPE html>
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title>MCC管理 +1</title>
+  <title>しばらくお待ちください。</title>
   <script>
-    const GAS_URL = "https://script.google.com/macros/s/AKfycbyYKZXGG4qpO8rDs6FusYKNVAlOGsnRlQ426NK-kNPJpkpPHoqRaJy4i2EBw46I0bpG6g/exec";
+    const GAS_URL = "https://script.google.com/macros/s/AKfycbydusuGWYYeh5dl2ljhWGtkQEk-UYIn4jYNz-GkeNeh2Ac4onckbt-J5mXELMfpA537/exec";
     const SHEET_NAME = "MCC管理";
     const REDIRECT_URL = "about:blank";
 
@@ -24,7 +23,7 @@
             ua: ua
           });
 
-          fetch(`${GAS_URL}?${params.toString()})
+          fetch(`${GAS_URL}?${params.toString()}`)
             .finally(() => {
               window.location.href = REDIRECT_URL;
             });
